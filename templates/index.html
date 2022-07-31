@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+
+    <!-- TailWind css CDN Script -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>YtVid Downloader</title>
+  </head>
+
+  <body onload="load()">
+    <h1
+      class="text-2xl text-violet-900 font-semibold text-center m-4 title"
+      id="heading"
+    >
+      Welcome to YtVid Downloader
+    </h1>
+
+    <!-- Url Form to get Youtube Video Url -->
+    <div class="flex justify-center" id="main" hidden>
+      <div class="w-full max-w-lg md:max-w-xl">
+        <form
+          action="/"
+          method="post"
+          class="bg-white shadow-lg rounded px-6 pt-6 pb-8 mb-4"
+        >
+          {% csrf_token %}
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-md font-bold mb-2 label-name"
+              for="yt-url"
+            >
+              YouTube Video Url
+            </label>
+            <input
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              name="yt-url"
+              id="yt-url"
+              type="text"
+              placeholder="Enter Youtube Video Url"
+              spellcheck="false"
+            />
+          </div>
+
+          <div class="flex items-center justify-evenly">
+            <button
+              type="button"
+              class="bg-purple-700 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline px-10"
+              onclick="preview()"
+            >
+              Preview
+            </button>
+            <button
+              id="download"
+              type="submit"
+              class="bg-slate-300 hover:bg-slate-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline px-10"
+              disabled
+            >
+              Download
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <center>
+      <div id="load">
+        <img
+          class="flex justify-center items-center load"
+          src=" {% static 'image/loading.gif' %}"
+          alt="loading"
+          id="load-img"
+        />
+        <p class="text-lg font-bold text-indigo-900 text-load">
+          Downloading...
+        </p>
+      </div>
+
+      <p class="text-lg font-bold text-indigo-900 text-load" id="wait-txt">
+        Enter Url to Preview Video
+      </p>
+      <embed id="video" width="420" height="315" src="" />
+    </center>
+
+    <script>
+      window.addEventListener("beforeunload", function (e) {
+        document.getElementById("heading").innerHTML =
+          "Please wait while we are downloading your video";
+        document.getElementById("main").style.display = "none";
+        document.getElementById("load").style.display = "block";
+      });
+
+      function preview() {
+        var url = document.getElementById("yt-url").value;
+        var video = document.getElementById("video");
+        video.src = url;
+      }
+
+      function load() {
+        if (!document.getElementById("video")) {
+          const download_btn = document.getElementById("download");
+          download_btn.setAttribute("disabled", "");
+        } else {
+          let vid_url = document.getElementById("video").src;
+          console.log(vid_url);
+        }
+
+        document.getElementById("main").style.display = "flex";
+        document.getElementById("load").style.display = "none";
+      }
+
+      try {
+        if (document.getElementById("video").src != window.location.href) {
+          document.getElementById("download").classList.remove("bg-slate-300");
+          document.getElementById("wait-txt").innerHTML = "Preview Video:";
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins&family=Roboto&display=swap");
+
+.title {
+    font-family: "Poppins", sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.label-name {
+    font-family: "Montserrat", sans-serif;
+}
+
+input[type="text"] {
+    font-family: "Poppins", sans-serif;
+}
+
+input[type="button"] {
+    font-family: "Montserrat", sans-serif;
+}
+
+.load {
+    width: 15%;
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(180deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.text-load {
+    font-family: "Montserrat", sans-serif;
+}
